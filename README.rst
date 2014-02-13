@@ -21,7 +21,7 @@ Production
 
     make install
 
-or::
+or
 
     pip install -r requirements.txt
 
