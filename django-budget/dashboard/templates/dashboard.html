@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load budget_tags %}
+
+{% block title %}{% trans "Dashboard" %}{% endblock title %}
+
+{% block content %}
+
+<h1>{% trans "Dashboard" %}</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans "Latest Expenses" %}</h3>
+            </div>
+
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>{% trans "Notes" %}</th>
+                        <th>{% trans "Date" %}</th>
+                        <th class="numeric">{% trans "Amount" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if latest_expenses %}
+                        {% for expense in latest_expenses %}
+                            <tr>
+                                <td>{{ expense.notes }}</td>
+                                <td>{{ expense.date|date:"SHORT_DATE_FORMAT" }}</td>
+                                <td class="numeric">
+                                    <a href="{% url 'transaction:transaction_edit' expense.id %}">
+                                        {% trans "$" %} {{ expense.amount|stringformat:".02f" }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3">{% trans "No recent expenses found." %}</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans "Latest Incomes" %}</h3>
+            </div>
+
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>{% trans "Notes" %}</th>
+                        <th>{% trans "Date" %}</th>
+                        <th class="numeric">{% trans "Amount" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if latest_incomes %}
+                        {% for income in latest_incomes %}
+                            <tr>
+                                <td>{{ income.notes }}</td>
+                                <td>{{ income.date|date:"SHORT_DATE_FORMAT" }}</td>
+                                <td class="numeric">
+                                    <a href="{% url 'transaction:transaction_edit' income.id %}">{% trans "$" %} {{ income.amount|stringformat:".02f" }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3">{% trans "No recent incomes found." %}</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<p>
+    <a class="btn btn-success" href="{% url 'transaction:transaction_add' %}"><i class="glyphicon glyphicon-plus"></i> {% trans "New Transaction" %}</a>
+</p>
+
+<br />
+
+<h3>{% trans "This Month's Usage" %}</h3>
+
+<div class="progress progress-striped">
+    <div class="progress-bar progress-bar-{% colorize_amount estimated_amount amount_used %}" style="width: {{ progress_bar_percent|stringformat:"d" }}%;">&nbsp;</div>
+</div>
+
+<p class="lead">
+    {% blocktrans with amount=amount_used|stringformat:".02f" estimate=estimated_amount|stringformat:".02f"%}
+        $ {{ amount }} out of $ {{ estimate }}.
+    {% endblocktrans %}
+</p>
+
+{% endblock content %}

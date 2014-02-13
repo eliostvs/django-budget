@@ -1,0 +1,3 @@
+#	requirements.txt in the root directory of a project.
+# This file is here because many Platforms as a Service look for
+-r requirements/production.txt

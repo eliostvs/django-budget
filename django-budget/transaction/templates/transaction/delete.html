@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Delete Transaction" %}{% endblock title %}
+
+{% block content %}
+
+<h2>{% trans "Delete Transaction" %}</h2>
+
+<p>
+    {% blocktrans %}
+    Are you sure you want to delete "{{ transaction }}"?
+    {% endblocktrans %}
+</p>
+
+<form method="post" action=".">
+    {% csrf_token %}
+
+    <div class="form-actions">
+        <a href="{% url 'transaction:transaction_list' %}" class="btn btn-default">{% trans "Cancel" %}</a>
+        <button type="submit" class="btn btn-danger">{% trans "Yes, I'm sure" %}</button>
+    </div>
+</form>
+
+{% endblock content %}

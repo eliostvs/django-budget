@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block extra_css %}
+   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/datepicker3.css">
+{% endblock extra_css %}
+
+{% block title %}{% trans "Edit Budget" %}{% endblock title %}
+
+{% block content %}
+
+<h2>{% trans "Edit Budget" %}</h2>
+
+<div class="row">
+    <form method="post" action="." class="col-md-6">
+        {% csrf_token %}
+
+        {% crispy form %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+            <a href="{% url 'budget:budget_list' %}" class="btn btn-default">{% trans "Cancel" %}</a>
+        </div>
+    </form>
+</div>
+
+<br />
+
+<p>
+    {% trans "You can also" %}
+    <a href="{% url 'budget:budget_delete' budget.slug %}">{% trans "delete" %}</a>
+    {% trans "this budget." %}
+</p>
+
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+    <script src="{{ STATIC_URL }}js/datepicker.js"></script>
+{% endblock extra_js %}

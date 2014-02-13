@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Summaries" %}{% endblock title %}
+
+{% block content %}
+
+<h1>{% trans "Summaries" %}</h1>
+
+{% if date_list  %}
+    <div class="row col-md-6">
+        <div class="list-group">
+            {% for date in date_list %}
+                {% ifchanged date.year %}
+                    {% if not forloop.first %}
+                        <br />
+                    {% endif %}
+
+                    <a href="{% url 'summary:summary_year' date.year %}" class="list-group-item active">{{ date.year }}</a>
+                {% endifchanged %}
+
+                <a href="{% url 'summary:summary_month' date.year date.month %}" class="list-group-item">{{ date|date:"F" }}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <p class="lead">{% trans "It looks like there haven't been any transactions, so there's nothing to show here." %}</p>
+{% endif %}
+
+{% endblock content %}

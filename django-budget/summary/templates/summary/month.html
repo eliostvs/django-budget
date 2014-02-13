@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load budget_tags %}
+
+{% block title %}
+{% blocktrans with year_month=start_date|date:"F Y" %}Month Summary For {{ year_month }}{% endblocktrans %}
+{% endblock title %}
+
+{% block content %}
+
+<h1>{% blocktrans with year_month=start_date|date:"F Y" %}Month Summary For {{ year_month }}{% endblocktrans %}</h1>
+
+{% if budget %}
+    <div class="panel panel-primary">
+          <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a href="{% url 'budget:budget_edit' budget.slug %}">{{ budget.name }}</a>
+                </h3>
+          </div>
+
+        <table class="table table-bordered table-hoover">
+            <thead>
+                <tr>
+                    <th>{% trans "Category" %}</th>
+                    <th class="numeric">{% trans "Estimated Total" %}</th>
+                    <th class="numeric">{% trans "Actual Total" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for group in estimates_and_transactions %}
+                    <tr>
+                        <td>
+                            {{ group.estimate.category.name }}
+                            <a data-toggle="collapse" href="#panel-collapse-{{ group.estimate.category.slug }}">[+]</a>
+
+                            <div class="panel-body">
+                                <div id="panel-collapse-{{ group.estimate.category.slug }}" class="panel-collapse collapse in">
+                                    {% if group.transactions %}
+                                        <table class="table table-condensed">
+                                            <tbody>
+                                                {% for transaction in group.transactions %}
+                                                    <tr>
+                                                        <td>{{ transaction.notes }}</td>
+                                                        <td>{{ transaction.date|date:"SHORT_DATE_FORMAT" }}</td>
+                                                        <td class="numeric">${{ transaction.amount|stringformat:".02f" }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% else %}
+                                        <p>{% trans "No transactions found." %}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="numeric">${{ group.estimate.amount|stringformat:".02f" }}</td>
+                        <td class="numeric">
+                            <span class="text-{% colorize_amount group.estimate.amount group.actual_amount %}">${{ group.actual_amount|stringformat:".02f" }}</span>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">{% trans "No data to show." %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>{% trans "Total" %}:</strong>
+                    </td>
+                    <td class="numeric">${{ budget.monthly_estimated_total|stringformat:".02f" }}</td>
+                    <td class="numeric">
+                        <span class="text-{% colorize_amount budget.monthly_estimated_total actual_total %}">${{ actual_total|stringformat:".02f" }}</span>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+{% else %}
+    <p class="lead">{% trans "Not found no budget this month!" %}</p>
+{% endif %}
+
+{% endblock content %}
+
+{% block extra_js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/summary.js"></script>
+{% endblock extra_js %}
+

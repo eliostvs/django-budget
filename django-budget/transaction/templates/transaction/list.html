@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Transaction List" %}{% endblock title %}
+
+{% block content %}
+
+<p>
+    <a class="btn btn-success" href="{% url 'transaction:transaction_add' %}">
+        <i class="glyphicon glyphicon-plus" class="glyphicon glyphicon-plus"></i>
+        {% trans "New Transaction" %}
+    </a>
+</p>
+
+<div id="transactions" class="panel panel-primary">
+      <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Transaction List" %}</h3>
+      </div>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="sort" data-sort="id">#</th>
+                <th class="sort" data-sort="note">{% trans "Notes" %}</th>
+                <th class="sort" data-sort="type">{% trans "Type" %}</th>
+                <th class="sort" data-sort="date">{% trans "Date" %}</th>
+                <th class="sort" data-sort="category">{% trans "Category" %}</th>
+                <th class="numeric sort" data-sort="amount">{% trans "Amount" %}</th>
+                <th>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </span>
+                        <input type="text" class="search form-control" placeholder="{% trans "Search..." %}" />
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="list">
+            {% if transactions %}
+                {% for transaction in transactions %}
+                    <tr>
+                        <td class="id">{{ transaction.id }}</td>
+                        <td class="note">{{ transaction.notes }}</td>
+                        <td class="type">{{ transaction.get_transaction_type_display }}</td>
+                        <td class="date">{{ transaction.date|date:"SHORT_DATE_FORMAT" }}</td>
+                        <td class="category">{{ transaction.category.name }}</td>
+                        <td class="numeric amount">
+                            {% blocktrans with amount=transaction.amount|stringformat:".02f" %}
+                               $ {{ amount }}
+                            {% endblocktrans %}
+                        <td>
+                            <a href="{% url 'transaction:transaction_edit' transaction.id %}" class="btn btn-default btn-sm">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </a>
+                            <a href="{% url 'transaction:transaction_delete' transaction.id %}" class="btn btn-default btn-sm">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="7">{% trans "No transactions found." %}</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+{% include 'pagination.html' %}
+
+{% endblock content %}
+
+{% block extra_js %}
+   <script src="{{ STATIC_URL }}/js/list.min.js"></script>
+    <script type="text/javascript">
+        var options = {
+            valueNames: ['id', 'note', 'type', 'date', 'category', 'amount']
+        };
+
+        var transactionList = new List('transactions', options);
+    </script>
+{% endblock extra_js %}

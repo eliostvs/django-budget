@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load active_tags %}
+
+{% if paginator.count %}
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="previous"><a href="?page={{ page_obj.previous_page_number }}">&larr; {% trans "Previous" %}</a></li>
+        {% else %}
+            <li class="previous disabled"><a href="#">&larr; {% trans "Previous" %}</a></li>
+        {% endif %}
+
+        {% for number in paginator.page_range %}
+            <li class="{% pagactive number %}">
+                <a href="?page={{ number }}">{{ number }}</a>
+            </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="next"><a href="?page={{ page_obj.next_page_number }}">{% trans "Next" %} &rarr;</a></li>
+        {% else %}
+            <li class="next disabled"><a href="#">{% trans "Next" %} &rarr;</a></li>
+        {% endif %}
+    </ul>
+{% endif %}
