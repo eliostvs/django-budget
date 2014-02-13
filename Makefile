@@ -47,8 +47,8 @@ localsyncdb:
 cmd:
 	$(PYTHON_BIN)/django-admin.py $(CMD) $(DJANGO_POSTFIX)
 
-localcmd:
-	$(PYTHON_BIN)/django-admin.py $(CMD) $(DJANGO_LOCAL_POSTFIX)
+shell:
+	$(PYTHON_BIN)/django-admin.py shell_plus $(DJANGO_LOCAL_POSTFIX)
 
 clean:
 	find . -name "*.pyc" -print0 | xargs -0 rm -rf
