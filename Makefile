@@ -32,10 +32,10 @@ collectstatic:
 	-mkdir -p .$(LOCALPATH)/assets/
 	$(PYTHON_BIN)/django-admin.py collectstatic -c --noinput $(DJANGO_POSTFIX)
 
-run:
+runserver:
 	$(PYTHON_BIN)/django-admin.py runserver $(DJANGO_POSTFIX)
 
-localrun:
+localrunserver:
 	$(PYTHON_BIN)/django-admin.py runserver $(DJANGO_LOCAL_POSTFIX)
 
 syncdb:
@@ -60,10 +60,12 @@ clean:
 	-rm -rf *.orig
 
 test: clean
-	$(PYTHON_BIN)/django-admin.py test $(APP) $(DJANGO_TEST_POSTFIX)
+	$(PYTHON_BIN)/coverage run --source=$(LOCALPATH) --omit="*integration*" $(PYTHON_BIN)/django-admin.py test $(APP) $(DJANGO_TEST_POSTFIX)
 
-coverage: clean
-	$(PYTHON_BIN)/coverage run $(PYTHON_BIN)/django-admin.py test $(APP) $(DJANGO_TEST_POSTFIX)
+integration: clean
+	$(PYTHON_BIN)/django-admin.py test --pattern="integration*.py" $(APP) $(DJANGO_TEST_POSTFIX)
+
+test.all: test integration
 
 coverage.report:
 	$(PYTHON_BIN)/coverage report -m --include="$(LOCALPATH)/*" --omit="*/admin.py,*/test*"
