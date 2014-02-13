@@ -18,7 +18,7 @@ Installation
 
 Production
 ----------
-::
+:
     make install
 
 or::
@@ -27,13 +27,13 @@ or::
 
 Development
 -----------
-::
+:
     pip install -r requeriments/local.txt
 
 
 Testing
 -------
-::
+:
     pip install -r requeriments/test.txt
 
 
