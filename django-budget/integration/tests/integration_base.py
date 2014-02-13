@@ -22,12 +22,14 @@ class BaseLiveServerTestCase(LiveServerTestCase):
         cls.browser.quit()
 
     def test_login_with_valid_user(self):
-        self.create_user()
+        self.get_or_create_user()
         self.login()
 
-    def create_user(self):
-        user = User.objects.create_user(self.username, '', self.password)
-        self.assertTrue(user)
+    def get_or_create_user(self):
+        try:
+            User.objects.get(username__exact=self.username)
+        except User.DoesNotExist:
+            User.objects.create_user(self.username, '', self.password)
 
     def login(self):
         url = self.get_url('login')
