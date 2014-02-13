@@ -34,3 +34,4 @@ pip-log.txt
 po
 pole
 sdist
+*.sqlite3
