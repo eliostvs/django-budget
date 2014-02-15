@@ -2,6 +2,8 @@
 django-budget
 =============
 
+.. image:: https://travis-ci.org/stvs2fork/django-budget.png?branch=master :target: https://travis-ci.org/stvs2fork/django-budget
+
 Overview
 ========
 
