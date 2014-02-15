@@ -8,6 +8,10 @@ django-budget
 .. image:: https://coveralls.io/repos/stvs2fork/django-budget/badge.png?branch=master
     :target: https://coveralls.io/r/stvs2fork/django-budget?branch=master
 
+.. image:: https://requires.io/github/stvs2fork/django-budget/requirements.png?branch=master
+    :target: https://requires.io/github/stvs2fork/django-budget/requirements/?branch=master
+    :alt: Requirements Status
+
 Overview
 ========
 
