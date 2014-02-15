@@ -3,5 +3,7 @@ python:
     - "2.7"
 install:
     - "pip install -r requirements/test.txt"
+    - "pip install coveralls"
 script:
     - "make test.all"
+after_success: coveralls
