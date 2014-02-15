@@ -5,3 +5,4 @@ model-mommy==1.2
 rebar==0.1
 mock==1.0.1
 djet==0.0.9
+splinter==0.6.0
