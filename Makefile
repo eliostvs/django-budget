@@ -60,7 +60,7 @@ clean:
 	-rm -rf *.orig
 
 test: clean
-	$(PYTHON_BIN)/coverage run --source=$(LOCALPATH) --omit="*/admin.py,*/test*,*/settings/*,*/django_budget/*,/*manage.py," $(PYTHON_BIN)/django-admin.py test $(APP) $(DJANGO_TEST_POSTFIX)
+	$(PYTHON_BIN)/coverage run --source=$(LOCALPATH) --omit="*/admin.py,*/tests_*,*/functional_*,*/django_budget/*,*/manage.py" $(PYTHON_BIN)/django-admin.py test $(APP) $(DJANGO_TEST_POSTFIX)
 
 test.functional: clean
 	$(PYTHON_BIN)/django-admin.py test --pattern="functional_*.py" $(APP) $(DJANGO_TEST_POSTFIX)
@@ -68,7 +68,7 @@ test.functional: clean
 test.all: test test.functional
 
 report:
-	$(PYTHON_BIN)/coverage report -m --include="$(LOCALPATH)/*"
+	$(PYTHON_BIN)/coverage report -m
 
 pip: requirements/$(SETTINGS).txt
 	pip install -r requirements/$(SETTINGS).txt
