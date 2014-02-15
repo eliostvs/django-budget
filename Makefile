@@ -60,12 +60,12 @@ clean:
 	-rm -rf *.orig
 
 test: clean
-	$(PYTHON_BIN)/coverage run --source=$(LOCALPATH) --omit="*integration*" $(PYTHON_BIN)/django-admin.py test $(APP) $(DJANGO_TEST_POSTFIX)
+	$(PYTHON_BIN)/coverage run --source=$(LOCALPATH) --omit="*functional_*" $(PYTHON_BIN)/django-admin.py test $(APP) $(DJANGO_TEST_POSTFIX)
 
-integration: clean
-	$(PYTHON_BIN)/django-admin.py test --pattern="integration*.py" $(APP) $(DJANGO_TEST_POSTFIX)
+test.functional: clean
+	$(PYTHON_BIN)/django-admin.py test --pattern="functional_*.py" $(APP) $(DJANGO_TEST_POSTFIX)
 
-test.all: test integration
+test.all: test test.functional
 
 coverage.report:
 	$(PYTHON_BIN)/coverage report -m --include="$(LOCALPATH)/*" --omit="*/admin.py,*/test*"
