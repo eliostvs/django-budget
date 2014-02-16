@@ -183,13 +183,10 @@ class SummaryYearViewTest(BaseTestCase):
         self.assertNotContains(response, "Not found no budget this year!")
         self.assertContains(response, category.name)
         self.assertContains(response, t1.notes)
-        self.assertContains(response, '%.02f' % t1.amount)
         self.assertContains(response, t1.date.strftime('%m/%d/%Y'))
         self.assertContains(response, t2.notes)
-        self.assertContains(response, '%.02f' % t2.amount)
         self.assertContains(response, t2.date.strftime('%m/%d/%Y'))
         self.assertContains(response, estimate.yearly_estimated_amount())
-        self.assertContains(response, '%.02f' % (t1.amount + t2.amount))
         self.assertContains(response, budget.yearly_estimated_total())
 
     def test_html_content_with_no_budget(self):

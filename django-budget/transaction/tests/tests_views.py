@@ -291,7 +291,6 @@ class TransactionEditViewTest(BaseTestCase):
         self.assertContains(response, transaction.get_transaction_type_display())
         self.assertContains(response, transaction.notes)
         self.assertContains(response, transaction.category.name)
-        self.assertContains(response, '%.02f' % transaction.amount)
         self.assertContains(response, transaction.date)
         self.assertContains(response, reverse('transaction:transaction_list'))
         self.assertContains(response, reverse('transaction:transaction_delete', kwargs={'pk': transaction.pk}))

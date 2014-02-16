@@ -101,7 +101,6 @@ class DashboardViewTest(BaseTestCase):
         self.assertContains(response, 'No recent incomes found.')
         self.assertContains(response, 'style="width: 0%;"')
         self.assertContains(response, reverse('transaction:transaction_add'))
-        self.assertContains(response, '$ %.02f out of $ %.02f' % (Decimal('0.0'), Decimal('0.0')))
 
     def test_html_contetn_with_a_transactions(self):
         from transaction.models import Transaction
@@ -122,15 +121,12 @@ class DashboardViewTest(BaseTestCase):
         self.assertContains(response, reverse('transaction:transaction_edit', kwargs={'pk': expense.id}))
         self.assertContains(response, expense.notes)
         self.assertContains(response, expense.date.strftime('%m/%d/%Y'))
-        self.assertContains(response, '%.02f' % expense.amount)
 
         self.assertContains(response, reverse('transaction:transaction_edit', kwargs={'pk': income.id}))
         self.assertContains(response, income.notes)
         self.assertContains(response, income.date.strftime('%m/%d/%Y'))
-        self.assertContains(response, '%.02f' % expense.amount)
 
         self.assertContains(response, 'style="width: 75%;"')
-        self.assertContains(response, '$ %.02f out of $ %.02f' % (Decimal('7.5'), Decimal('10.0')))
 
     def test_view_redirect_if_anonymous(self):
         url = reverse('dashboard')
