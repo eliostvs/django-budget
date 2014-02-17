@@ -70,9 +70,12 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         {% if user.is_authenticated %}
+                            {% blocktrans with username=user.username|title %}
+                            <li class="navbar-text">Welcome, {{ username }}!</li>
+                            {% endblocktrans %}
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown">
-                                    <i id="userIcon" class="glyphicon glyphicon-user" style="color:#fff">
+                                    <i class="glyphicon glyphicon-user" style="color:#fff">
                                         <span class="caret"></span>
                                     </i>
                                 </a>

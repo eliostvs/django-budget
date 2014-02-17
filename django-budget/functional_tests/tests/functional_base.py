@@ -34,7 +34,7 @@ class BaseLiveServer(LiveServerTestCase):
 
 class LoginTestCase(BaseLiveServer):
 
-    def test_login_and_logout(self):
+    def test_login_with_valid_user(self):
         self.get_or_create_user()
 
         self.browser.visit(self.live_server_url)
@@ -45,6 +45,6 @@ class LoginTestCase(BaseLiveServer):
         self.browser.fill('password', self.password)
         self.browser.find_by_name('login').click()
 
-        icon = self.browser.find_by_id('userIcon')
+        welcome_text = self.browser.find_by_css('.navbar-text').first
 
-        self.assertTrue(icon)
+        self.assertEqual('Welcome, %s!' % self.username.capitalize(), welcome_text.html)
