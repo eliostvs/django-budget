@@ -15,8 +15,9 @@ DJANGO_TEST_SETTINGS_MODULE = $(PROJECT).settings.$(TEST_SETTINGS)
 DJANGO_POSTFIX := --settings=$(DJANGO_SETTINGS_MODULE) --pythonpath=$(PYTHONPATH)
 DJANGO_TEST_POSTFIX := --settings=$(DJANGO_TEST_SETTINGS_MODULE) --pythonpath=$(PYTHONPATH)
 PYTHON_BIN := $(VIRTUAL_ENV)/bin
+TEST_VERBOSITY := 1
 
-.PHONY: clean showenv coverage test pip
+.PHONY: collectstatic run localrun syncdb localsyncdb cmd shell clean test test.functional test.all report install
 
 showenv:
 	@echo 'Environment:'
@@ -60,18 +61,15 @@ clean:
 	-rm -rf *.orig
 
 test: clean
-	$(PYTHON_BIN)/coverage run --source=$(LOCALPATH) --omit="*/admin.py,*/tests_*,*/functional_*,*/django_budget/*,*/manage.py" $(PYTHON_BIN)/django-admin.py test $(APP) $(DJANGO_TEST_POSTFIX)
+	$(PYTHON_BIN)/coverage run --source=$(LOCALPATH) --omit="*/admin.py,*/tests_*,*/functional_*,*/django_budget/*,*/manage.py" $(PYTHON_BIN)/django-admin.py test --verbosity=$(TEST_VERBOSITY) $(APP) $(DJANGO_TEST_POSTFIX)
 
 test.functional: clean
-	$(PYTHON_BIN)/django-admin.py test --pattern="functional_*.py" $(APP) $(DJANGO_TEST_POSTFIX)
+	$(PYTHON_BIN)/django-admin.py test --verbosity=$(TEST_VERBOSITY) --pattern="functional_*.py" $(APP) $(DJANGO_TEST_POSTFIX)
 
 test.all: test test.functional
 
 report:
 	$(PYTHON_BIN)/coverage report -m
 
-pip: requirements/$(SETTINGS).txt
+install: requirements/$(SETTINGS).txt
 	pip install -r requirements/$(SETTINGS).txt
-
-localpip: requirements/$(LOCAL_SETTINGS).txt
-	pip install -r requirements/$(LOCAL_SETTINGS).txt
