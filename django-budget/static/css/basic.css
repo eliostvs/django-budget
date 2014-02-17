@@ -6,12 +6,3 @@
 body {
     padding-top: 70px;
 }
-
-footer {
-    background-color: #262829;
-    color: #7A7A7A;
-    height: 50px;
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-}
