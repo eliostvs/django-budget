@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import LiveServerTestCase
 
 from splinter import Browser
+from selenium.webdriver import DesiredCapabilities
 
 User = get_user_model()
 
@@ -13,7 +14,9 @@ class BaseLiveServer(LiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super(BaseLiveServer, cls).setUpClass()
-        cls.browser = Browser('phantomjs')
+        capabilities = DesiredCapabilities.PHANTOMJS.copy()
+        capabilities['phantomjs.page.customHeaders.Accept-Language'] = 'en,en_US;q=0.8'
+        cls.browser = Browser('phantomjs', desired_capabilities=capabilities)
 
     @classmethod
     def tearDownClass(cls):
@@ -22,13 +25,19 @@ class BaseLiveServer(LiveServerTestCase):
 
     def get_or_create_user(self):
         try:
-            User.objects.get(username__exact=self.username)
+            user = User.objects.get(username__exact=self.username)
         except User.DoesNotExist:
-            User.objects.create_user(self.username, '', self.password)
+            user = User.objects.create_user(self.username, '', self.password)
 
-    def login(self):
-        url = self.get_url('login')
-        self.browser.visit(url)
+        return user
+
+
+class LoginTestCase(BaseLiveServer):
+
+    def test_login_and_logout(self):
+        self.get_or_create_user()
+
+        self.browser.visit(self.live_server_url)
 
         self.assertEqual('Login', self.browser.title)
 
@@ -36,15 +45,6 @@ class BaseLiveServer(LiveServerTestCase):
         self.browser.fill('password', self.password)
         self.browser.find_by_name('login').click()
 
-    def get_url(self, url):
-        return '%s/en/%s/' % (self.live_server_url, url)
-
-
-class LoginTestCase(BaseLiveServer):
-
-    def test_login_with_valid_user(self):
-        self.get_or_create_user()
-        self.login()
         icon = self.browser.find_by_id('userIcon')
 
         self.assertTrue(icon)
