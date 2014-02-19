@@ -5,8 +5,6 @@ from django.test import LiveServerTestCase
 from selenium.webdriver import DesiredCapabilities
 from splinter import Browser
 
-User = get_user_model()
-
 
 class BaseLiveServer(LiveServerTestCase):
     username = 'spam'
@@ -21,10 +19,12 @@ class BaseLiveServer(LiveServerTestCase):
 
     @classmethod
     def tearDownClass(cls):
-        super(BaseLiveServer, cls).tearDownClass()
         cls.browser.quit()
+        super(BaseLiveServer, cls).tearDownClass()
 
     def get_or_create_user(self):
+        User = get_user_model()
+
         try:
             user = User.objects.get(username__exact=self.username)
         except User.DoesNotExist:
@@ -32,7 +32,7 @@ class BaseLiveServer(LiveServerTestCase):
 
         return user
 
-    def create_pre_authenticated_session(self):
+    def create_auth_session(self):
         user = self.get_or_create_user()
         session = SessionStore()
         session[SESSION_KEY] = user.pk
@@ -45,13 +45,19 @@ class BaseLiveServer(LiveServerTestCase):
             value=session.session_key,
             path='/'))
 
+    def abspath(self, url):
+        return '{}{}'.format(self.live_server_url, url)
+
+    def visit(self, url):
+        abspath = self.abspath(url)
+        self.browser.visit(abspath)
+
 
 class LoginTestCase(BaseLiveServer):
 
     def test_login_with_valid_user(self):
         self.get_or_create_user()
-
-        self.browser.visit(self.live_server_url)
+        self.visit('/')
 
         self.assertEqual('Login', self.browser.title)
 
