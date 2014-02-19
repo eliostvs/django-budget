@@ -1,8 +1,9 @@
-from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.contrib.auth import BACKEND_SESSION_KEY, get_user_model, SESSION_KEY
+from django.contrib.sessions.backends.db import SessionStore
 from django.test import LiveServerTestCase
-
-from splinter import Browser
 from selenium.webdriver import DesiredCapabilities
+from splinter import Browser
 
 User = get_user_model()
 
@@ -30,6 +31,19 @@ class BaseLiveServer(LiveServerTestCase):
             user = User.objects.create_user(self.username, '', self.password)
 
         return user
+
+    def create_pre_authenticated_session(self):
+        user = self.get_or_create_user()
+        session = SessionStore()
+        session[SESSION_KEY] = user.pk
+        session[BACKEND_SESSION_KEY] = settings.AUTHENTICATION_BACKENDS[0]
+        session.save()
+        self.browser.visit(self.live_server_url)
+        driver = self.browser.driver
+        driver.add_cookie(dict(
+            name=settings.SESSION_COOKIE_NAME,
+            value=session.session_key,
+            path='/'))
 
 
 class LoginTestCase(BaseLiveServer):
