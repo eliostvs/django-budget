@@ -16,6 +16,7 @@ class BaseLiveServer(LiveServerTestCase):
         capabilities = DesiredCapabilities.PHANTOMJS.copy()
         capabilities['phantomjs.page.customHeaders.Accept-Language'] = 'en,en_US;q=0.8'
         cls.browser = Browser('phantomjs', desired_capabilities=capabilities)
+        cls.driver = cls.browser.driver
 
     @classmethod
     def tearDownClass(cls):
@@ -39,8 +40,7 @@ class BaseLiveServer(LiveServerTestCase):
         session[BACKEND_SESSION_KEY] = settings.AUTHENTICATION_BACKENDS[0]
         session.save()
         self.browser.visit(self.live_server_url)
-        driver = self.browser.driver
-        driver.add_cookie(dict(
+        self.driver.add_cookie(dict(
             name=settings.SESSION_COOKIE_NAME,
             value=session.session_key,
             path='/'))
