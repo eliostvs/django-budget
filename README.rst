@@ -12,6 +12,10 @@ django-budget
     :target: https://requires.io/github/stvs2fork/django-budget/requirements/?branch=master
     :alt: Requirements Status
 
+.. image:: https://d2weczhvl823v0.cloudfront.net/stvs2fork/django-budget/trend.png
+    :target: https://bitdeli.com/free
+    :alt: "Bitdeli Badge"
+
 Overview
 ========
 
