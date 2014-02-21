@@ -14,7 +14,7 @@ django-budget
 
 .. image:: https://d2weczhvl823v0.cloudfront.net/stvs2fork/django-budget/trend.png
     :target: https://bitdeli.com/free
-    :alt: "Bitdeli Badge"
+    :alt: Bitdeli Badge
 
 Overview
 ========
