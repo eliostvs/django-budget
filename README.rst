@@ -12,6 +12,9 @@ django-budget
     :target: https://requires.io/github/stvs2fork/django-budget/requirements/?branch=master
     :alt: Requirements Status
 
+.. image:: https://coviolations.io/projects/stvs2fork/django-budget/badge/?
+    :target: https://coviolations.io/#/projects/stvs2fork/django-budget/
+
 Overview
 ========
 

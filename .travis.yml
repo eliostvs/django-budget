@@ -1,9 +1,16 @@
 language: python
 python:
     - "2.7"
+before_install:
+    - "pip install pep8"
+    - "sudo apt-get update -qq"
+    - "sudo apt-get install -qq sloccount"
+    - "pip install coveralls"
+    - "pip install coviolations_app"
 install:
     - "pip install -r requirements/test.txt"
-    - "pip install coveralls"
 script:
     - "make test.all"
-after_success: coveralls
+after_success:
+    - "coveralls"
+    - "covio"

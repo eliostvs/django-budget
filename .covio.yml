@@ -1,0 +1,3 @@
+violations:
+    pep8: pep8 django-budget --exclude="*settings*,*tests_*"
+    sloccount: sloccount django-budget
