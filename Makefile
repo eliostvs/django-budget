@@ -17,7 +17,7 @@ DJANGO_TEST_POSTFIX := --settings=$(DJANGO_TEST_SETTINGS_MODULE) --pythonpath=$(
 PYTHON_BIN := $(VIRTUAL_ENV)/bin
 TEST_VERBOSITY := 1
 
-.PHONY: collectstatic run localrun syncdb localsyncdb cmd shell clean test test.functional test.all report install
+.PHONY: showenv collectstatic runserver localrunserver syncdb localsyncdb cmd shell clean test test.functional test.all report install
 
 showenv:
 	@echo 'Environment:'
