@@ -274,7 +274,7 @@ LOGIN_URL = reverse_lazy('login')
 ########## END AUTHENTICATION CONFIGURATION
 
 
-########## AUTHENTICATION CONFIGURATION
+########## MESSAGES CONFIGURATION
 # https://docs.djangoproject.com/en/dev/ref/contrib/messages/#message-tags
 MESSAGE_TAGS = {
     messages.INFO: 'alert-info',
@@ -283,4 +283,4 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-########## END AUTHENTICATION CONFIGURATION
+########## END MESSAGES CONFIGURATION
