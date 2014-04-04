@@ -15,7 +15,7 @@ DJANGO_TEST_SETTINGS_MODULE = $(PROJECT).settings.$(TEST_SETTINGS)
 DJANGO_POSTFIX := --settings=$(DJANGO_SETTINGS_MODULE) --pythonpath=$(PYTHONPATH)
 DJANGO_TEST_POSTFIX := --settings=$(DJANGO_TEST_SETTINGS_MODULE) --pythonpath=$(PYTHONPATH)
 PYTHON_BIN := $(VIRTUAL_ENV)/bin
-TEST_VERBOSITY := 1
+VERBOSITY := 1
 
 .PHONY: showenv collectstatic runserver localrunserver syncdb localsyncdb cmd shell clean test test.functional test.all report install
 
@@ -30,8 +30,7 @@ showenv:
 	@echo 'DJANGO_TEST_SETTINGS_MODULE:' $(DJANGO_TEST_SETTINGS_MODULE)
 
 collectstatic:
-	-mkdir -p .$(LOCALPATH)/assets/
-	$(PYTHON_BIN)/django-admin.py collectstatic -c --noinput $(DJANGO_POSTFIX)
+	$(PYTHON_BIN)/python $(LOCALPATH)/manage.py collectstatic --noinput -c
 
 runserver:
 	$(PYTHON_BIN)/django-admin.py runserver $(DJANGO_POSTFIX)
@@ -61,10 +60,10 @@ clean:
 	-rm -rf *.orig
 
 test: clean
-	$(PYTHON_BIN)/coverage run --source=$(LOCALPATH) --omit="*/admin.py,*/tests_*,*/functional_*,*/django_budget/*,*/manage.py" $(PYTHON_BIN)/django-admin.py test --verbosity=$(TEST_VERBOSITY) $(APP) $(DJANGO_TEST_POSTFIX)
+	$(PYTHON_BIN)/coverage run --source=$(LOCALPATH) --omit="*/admin.py,*/tests_*,*/functional_*,*/django_budget/*,*/manage.py" $(PYTHON_BIN)/django-admin.py test --verbosity=$(VERBOSITY) $(APP) $(DJANGO_TEST_POSTFIX)
 
 test.functional: clean
-	$(PYTHON_BIN)/django-admin.py test --verbosity=$(TEST_VERBOSITY) --pattern="functional_*.py" $(APP) $(DJANGO_TEST_POSTFIX)
+	$(PYTHON_BIN)/django-admin.py test --verbosity=$(VERBOSITY) --pattern="functional_*.py" $(APP) $(DJANGO_TEST_POSTFIX)
 
 test.all: test test.functional
 
