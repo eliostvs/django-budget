@@ -35,3 +35,4 @@ po
 pole
 sdist
 *.sqlite3
+*/assets/*

@@ -2,9 +2,10 @@
 
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load staticfiles %}
 
 {% block extra_css %}
-   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/datepicker3.css">
+   <link rel="stylesheet" type="text/css" href="{% static 'css/datepicker3.css' %}">
 {% endblock extra_css %}
 
 {% block title %}{% trans "Add A Budget" %}{% endblock title %}
@@ -27,6 +28,6 @@
 {% endblock content %}
 
 {% block extra_js %}
-    <script src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
-    <script src="{{ STATIC_URL }}js/datepicker.js"></script>
+    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/datepicker.js' %}"></script>
 {% endblock extra_js %}

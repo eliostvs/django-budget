@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load staticfiles %}
 
 {% block title %}{% trans "Estimate List For " %}{{ budget.name }}{% endblock title %}
 
@@ -61,7 +62,7 @@
 {% endblock content %}
 
 {% block extra_js %}
-    <script src="{{ STATIC_URL }}/js/list.min.js"></script>
+    <script src="{% static '/js/list.min.js' %}"></script>
     <script type="text/javascript">
         var options = {
             valueNames: ['id', 'category', 'amount']
