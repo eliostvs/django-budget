@@ -61,7 +61,6 @@ clean:
 
 test: clean
 	$(PYTHON_BIN)/coverage run --source=$(LOCALPATH) \
-	--omit="*/admin.py,*/tests_*,*/functional_*,*/django_budget/*,*/manage.py" \
 	$(PYTHON_BIN)/django-admin.py test --verbosity=$(VERBOSITY) \
 	$(APP) $(DJANGO_TEST_POSTFIX)
 
