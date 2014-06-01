@@ -3,7 +3,7 @@ django-budget
 =============
 
 .. image:: https://travis-ci.org/eliostvs/django-budget.png?branch=master
-    :target: https://travis-ci.org/stvs2fork/django-budget
+    :target: https://travis-ci.org/eliostvs/django-budget
 
 .. image:: https://coveralls.io/repos/eliostvs/django-budget/badge.png?branch=master
     :target: https://coveralls.io/r/eliostvs/django-budget?branch=master
