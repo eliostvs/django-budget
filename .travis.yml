@@ -9,9 +9,7 @@ before_install:
     - "sudo apt-get install -qq sloccount"
     - "pip install coveralls"
     - "pip install coviolations_app"
-
-install:
-    - "pip install -r requirements/test.txt"
+    - "pip install tox"
 
 script:
     - "tox"
