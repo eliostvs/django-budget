@@ -2,18 +2,18 @@
 django-budget
 =============
 
-.. image:: https://travis-ci.org/stvs2fork/django-budget.png?branch=master
+.. image:: https://travis-ci.org/eliostvs/django-budget.png?branch=master
     :target: https://travis-ci.org/stvs2fork/django-budget
 
-.. image:: https://coveralls.io/repos/stvs2fork/django-budget/badge.png?branch=master
-    :target: https://coveralls.io/r/stvs2fork/django-budget?branch=master
+.. image:: https://coveralls.io/repos/eliostvs/django-budget/badge.png?branch=master
+    :target: https://coveralls.io/r/eliostvs/django-budget?branch=master
 
-.. image:: https://requires.io/github/stvs2fork/django-budget/requirements.png?branch=master
-    :target: https://requires.io/github/stvs2fork/django-budget/requirements/?branch=master
+.. image:: https://requires.io/github/eliostvs/django-budget/requirements.png?branch=master
+    :target: https://requires.io/github/eliostvs/django-budget/requirements/?branch=master
     :alt: Requirements Status
 
-.. image:: https://coviolations.io/projects/stvs2fork/django-budget/badge/?
-    :target: https://coviolations.io/#/projects/stvs2fork/django-budget/
+.. image:: https://coviolations.io/projects/eliostvs/django-budget/badge/?
+    :target: https://coviolations.io/#/projects/eliostvs/django-budget/
 
 Overview
 ========
