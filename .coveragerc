@@ -1,0 +1,10 @@
+[run]
+omit =
+    */test*
+    */migrations/*
+    */functional_*
+    */settings/*
+    */wsgi.py
+    */manage.py
+
+source = django-budget
