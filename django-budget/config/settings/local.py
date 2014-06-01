@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 """Development settings and globals."""
 
 from os.path import join, normpath

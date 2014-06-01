@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.conf import settings
 from django.contrib.auth import BACKEND_SESSION_KEY, get_user_model, SESSION_KEY
 from django.contrib.sessions.backends.db import SessionStore

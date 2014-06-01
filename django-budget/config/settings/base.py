@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 """Common settings and globals."""
 
 from os.path import abspath, basename, dirname, join, normpath

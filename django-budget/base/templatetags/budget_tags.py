@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from decimal import Decimal, InvalidOperation
 
 from django import template

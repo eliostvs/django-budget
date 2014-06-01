@@ -1,9 +1,12 @@
+from __future__ import unicode_literals
+
 from datetime import date
 from decimal import Decimal
 
 from django.db import models
 from django.db.models import Sum
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
 
 from base.models import ActiveManager, StandardMetadata
 from category.models import Category
@@ -15,6 +18,7 @@ class BudgetLatestManager(ActiveManager):
         return super(BudgetLatestManager, self).get_query_set().filter(start_date__lte=date).latest('start_date')
 
 
+@python_2_unicode_compatible
 class Budget(StandardMetadata):
     name = models.CharField(_('Name'), max_length=100)
     slug = models.SlugField(_('Slug'), unique=True)
@@ -25,7 +29,7 @@ class Budget(StandardMetadata):
     objects = models.Manager()
     active = BudgetLatestManager()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def actual_total(self, start_date, end_date):
@@ -66,6 +70,7 @@ class Budget(StandardMetadata):
         verbose_name_plural = _('Budgets')
 
 
+@python_2_unicode_compatible
 class BudgetEstimate(StandardMetadata):
     budget = models.ForeignKey(Budget,
                                related_name='estimates',
@@ -80,8 +85,8 @@ class BudgetEstimate(StandardMetadata):
     objects = models.Manager()
     active = ActiveManager()
 
-    def __unicode__(self):
-        return u'%s - %.02f' % (self.category.name, self.amount)
+    def __str__(self):
+        return '%s - %.02f' % (self.category.name, self.amount)
 
     def actual_transactions(self, start_date, end_date):
         return Transaction.expenses.filter(category=self.category,

@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 """
 WSGI config for django-budget project.
 

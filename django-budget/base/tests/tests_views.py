@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import login, logout_then_login
 from django.core.urlresolvers import reverse

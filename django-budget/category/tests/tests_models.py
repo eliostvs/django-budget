@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -30,7 +32,7 @@ class CategoryModelTest(TestCase):
     def test_category_unicode_string(self):
         category = mommy.make('Category', name='Foo')
 
-        self.assertEqual('Foo', category.__unicode__())
+        self.assertEqual('Foo', str(category))
 
     def test_category_active_manager(self):
         from category.models import Category

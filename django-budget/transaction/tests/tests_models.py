@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from datetime import timedelta
 from decimal import Decimal
 
@@ -39,7 +41,7 @@ class TransactionModelTest(TestCase):
 
         t = mommy.make(Transaction, notes='Foo', amount=Decimal('1.0'))
 
-        self.assertEqual(u'Foo (Expense) - 1.00', t.__unicode__())
+        self.assertEqual(u'Foo (Expense) - 1.00', str(t))
 
     def test_active_transaction_manager(self):
         from transaction.models import Transaction

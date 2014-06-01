@@ -1,7 +1,10 @@
+from __future__ import unicode_literals
+
 from datetime import date
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
 
 from base.models import ActiveManager, StandardMetadata
 from category.models import Category
@@ -27,6 +30,7 @@ class TransactionByMonthManager(ActiveManager):
         return super(TransactionByMonthManager, self).get_query_set().dates('date', 'month')
 
 
+@python_2_unicode_compatible
 class Transaction(StandardMetadata):
     EXPENSE = 'expense'
     INCOME = 'income'
@@ -53,10 +57,10 @@ class Transaction(StandardMetadata):
     expenses = TransactionExpenseManager()
     months = TransactionByMonthManager()
 
-    def __unicode__(self):
-        return u'%s (%s) - %.02f' % (self.notes,
-                                     self.get_transaction_type_display(),
-                                     self.amount)
+    def __str__(self):
+        return '%s (%s) - %.02f' % (self.notes,
+                                    self.get_transaction_type_display(),
+                                    self.amount)
 
     class Meta:
         verbose_name = _('Transaction')

@@ -1,10 +1,14 @@
+from __future__ import unicode_literals
+
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
 
 from base.models import ActiveManager, StandardMetadata
 
 
+@python_2_unicode_compatible
 class Category(StandardMetadata):
     """
     Categories are the means to loosely tie together the transactions and
@@ -20,7 +24,7 @@ class Category(StandardMetadata):
     objects = models.Manager()
     active = ActiveManager()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_absolute_url(self):

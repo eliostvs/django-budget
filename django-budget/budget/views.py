@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404

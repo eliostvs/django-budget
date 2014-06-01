@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 """Production settings and globals."""
 
 from os import environ

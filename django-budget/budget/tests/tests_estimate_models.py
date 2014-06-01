@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from datetime import date, timedelta
 from decimal import Decimal
 
@@ -20,7 +22,7 @@ class BudgetEstimateModel(TestCase):
     def test_estimate_unicode_string(self):
         estimate = mommy.make('BudgetEstimate', category__name='Foo', amount=Decimal('1.0'))
 
-        self.assertEqual(u'Foo - 1.00', estimate.__unicode__())
+        self.assertEqual(u'Foo - 1.00', str(estimate))
 
     def test_estimate_active_manager(self):
         from budget.models import BudgetEstimate as Estimate
