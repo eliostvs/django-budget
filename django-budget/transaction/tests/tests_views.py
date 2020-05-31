@@ -375,5 +375,4 @@ class TransactionDeleteViewTest(BaseTestCase):
     def post(self, transaction):
         url = reverse('transaction:transaction_delete', kwargs={'pk': transaction.id})
         request = self.factory.post(path=url, user=self.mock_user)
-        response = self.view(request, pk=transaction.id)
-        return response
+        return self.view(request, pk=transaction.id)

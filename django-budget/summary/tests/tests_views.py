@@ -323,5 +323,4 @@ class SummaryMonthViewTest(BaseTestCase):
     def getf(self, year, month):
         url = reverse('summary:summary_month', kwargs={'year': year, 'month': month})
         request = self.factory.get(path=url, user=self.mock_user)
-        response = self.view(request, year=year, month=month)
-        return response
+        return self.view(request, year=year, month=month)
